@@ -16,11 +16,14 @@ namespace ArduinoDataToDB
 {
     class DatabaseLogic
     {
-
+        /* 
+        * This bool validates the connection between this program and the datbase. If there is 
+        * no valid connection, the user gets an error about this. 
+        */
         public bool ConnectionToDBSuccessful()
         {
             //This is your personal MySQL connection string, you need to change this. 
-            string _connStr = "server=localhost;user=root;database=dbcasus;port=3306;password=@ViezeDrekskeuter!";
+            string _connStr = "server=localhost;user=testuser;database=testdb;port=3306;password=@Zuyd2022!";
             MySqlConnection conn = new MySqlConnection(_connStr);
 
             // Try to make a connection with the DB from the string above
@@ -41,15 +44,20 @@ namespace ArduinoDataToDB
         }
 
 
+        /* After each succesful reading done by the Arduino, the data gets saved in the database. 
+         * This function saves the reading and attaches a timestamp to You can add more properties to it
+         * if you want to, but make sure to add them also to the table in the DB. Otherwise, the program 
+         * will crash because of a non existing part in the table. 
+         */
         public void SaveData(float data)
         {
             Console.WriteLine("Data from Arduino: " + data);
 
-            string _connStr = "server=localhost;user=root;database=dbcasus;port=3306;password=@ViezeDrekskeuter!";
+            string _connStr = "server=localhost;user=testuser;database=testdb;port=3306;password=@Zuyd2022!";
             MySqlConnection conn = new MySqlConnection(_connStr);
             DateTime getDateTime = DateTime.Now;
             // You also need to change the INSERT statement. After 'INSERT INTO', you need to write yourDatabase.yourTable.
-            string sqlInsert = "INSERT INTO dbcasus.test(measurement, timestamp) VALUES (@currentMeasurement, @currentDateTime)";
+            string sqlInsert = "INSERT INTO testdb.test(measurement, timestamp) VALUES (@currentMeasurement, @currentDateTime)";
 
             conn.Open();
             using (MySqlCommand cmd = new MySqlCommand(sqlInsert, conn))

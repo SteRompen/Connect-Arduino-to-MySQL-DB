@@ -22,6 +22,10 @@ namespace ArduinoDataToDB
         static SerialPort _serialPort;
 
 
+        /* 
+         * This bool validates the connection between this program and the Arduino. If there is no valid connection,
+         * the user gets an error about this. 
+         */
         public bool ConnectionWithArduinoSuccessful()
         {
             try
@@ -44,6 +48,12 @@ namespace ArduinoDataToDB
         }
 
 
+        /*
+         * This void read the data from the Arduino and converts it (it is a string by default) to 
+         * a float. In the most cases, you will need a float as datatype. In some cases, you need 
+         * an integer. You can change this by yourself. When the reading is succesful, the reading
+         * will be save into the database.
+         */
         public void ActivateMeasurment()
         {
             _serialPort = new SerialPort
@@ -62,15 +72,15 @@ namespace ArduinoDataToDB
                 {
                     float data = float.Parse(record, CultureInfo.InvariantCulture.NumberFormat);
                     dBLogic.SaveData(data);
-                    // This is the time between the readings. You can change this if you want to.
-                    // NOTE: time in miliseconds, so 1 sec = 1000 for example
+                    // DO NOT CHANGE THIS SLEEP
                     Thread.Sleep(5000);
                 }
                 catch (FormatException)
                 {
                     Console.WriteLine($"Unable to parse '{record}'");
                     // This is the time between the readings. You can change this if you want to.
-                    // NOTE: time in miliseconds, so 1 sec = 1000 for example
+                    // IMPORTANT: if you want to change this, you also need to change the `delay` in 
+                    // the Arduino Code, if you don't, the program will not work correctly.
                     Thread.Sleep(5000);
                 }
             }
