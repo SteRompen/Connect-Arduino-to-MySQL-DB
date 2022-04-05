@@ -16,6 +16,11 @@ namespace ArduinoDataToDB
 {
     class Program
     {
+        /*
+         * This is the main part of this appliction. First, the connection between this application and the database
+         * gets validated. AFter that, the connection between the application and the Arduino (serial connection) gets
+         * validated. If one or both connections are not valid, the user gets notified by a message in the console.
+         */
         public static void Main()
         {
             Arduino arduino = new Arduino();
@@ -52,6 +57,9 @@ namespace ArduinoDataToDB
         }
 
 
+        /*
+         * In case of a non-valid connection, there will be an error displaying the error that occured. 
+         */
         private void DisplayError(string error)
         {
             Console.WriteLine("--- WARNING WARNING WARNING ---");
@@ -59,6 +67,11 @@ namespace ArduinoDataToDB
         }
 
 
+        /* 
+         * In case of an error, the user needs to shutdown the program, fix the error and then restart 
+         * the program. To shutdown the console in a easy way, this function helps the user doing this. 
+         * After a random button press, the console shuts down.
+         */
         private void EscapeProgram()
         {
             Console.WriteLine("Press any key to stop...");
