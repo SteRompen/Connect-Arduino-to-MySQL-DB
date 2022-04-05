@@ -7,29 +7,38 @@ you will need to make a connection to your own MySQL db. A manual about connecti
 your own database can be found in the README file. 
 
 GitHub link: 
-*/ 
+*/
 
 using System;
-using System.IO.Ports;
-using System.Threading;
+
 
 namespace ArduinoDataToDB
 {
     class Program
     {
-        static SerialPort _serialPort;
         public static void Main()
         {
-            _serialPort = new SerialPort();
-            _serialPort.PortName = "COM7"; //Set your board COM
-            _serialPort.BaudRate = 9600;
-            _serialPort.Open();
-            while (true)
+            Arduino arduino = new Arduino();
+            DatabaseLogic dBLogic = new DatabaseLogic();
+
+            Console.WriteLine("Connecting to MySQL...");
+            // Validate the connection to the DB
+            if (dBLogic.ConnectToMySQL())
             {
-                string record = _serialPort.ReadExisting();
-                Console.WriteLine(record);
-                Thread.Sleep(200);
+                Console.WriteLine("Connection succesful");
+                arduino.ActivateMeasurment();
+            }
+            else
+            {
+                Console.WriteLine("Connection NOT succesful. Please check the connection to the " +
+                "MySQL database you are using.");
             }
         }
     }
+
+
+
+
+
 }
+
