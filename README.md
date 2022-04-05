@@ -1,7 +1,8 @@
 # Connect Arduino to MySQL DB
 
 This is a console app written in C# to connect your own Arduino to a MySQL database (local). With this console app, you can get the readings from the Arduino to the DB by using the serial port, so there is no WiFi, Ethernet or Bluetooth module/shield needed. You only need an Arduino, a cable to connect the Arduino to your device (laptop or computer), MySQL Workbench, Visual Studio 2019 or above and the Arduino IDE.
-
+## Important 
+By default, this application works only with a value from Arduino that is a `float`, if you want to save a `int` for example, you need to change the try/catch box in `Arduino` class. 
 
 # What do you need to do?
 ### MySQL
