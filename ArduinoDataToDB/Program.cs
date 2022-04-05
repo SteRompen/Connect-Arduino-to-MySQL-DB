@@ -7,29 +7,63 @@ you will need to make a connection to your own MySQL db. A manual about connecti
 your own database can be found in the README file. 
 
 GitHub link: 
-*/ 
+*/
 
 using System;
-using System.IO.Ports;
-using System.Threading;
+
 
 namespace ArduinoDataToDB
 {
     class Program
     {
-        static SerialPort _serialPort;
         public static void Main()
         {
-            _serialPort = new SerialPort();
-            _serialPort.PortName = "COM7"; //Set your board COM
-            _serialPort.BaudRate = 9600;
-            _serialPort.Open();
-            while (true)
+            Arduino arduino = new Arduino();
+            DatabaseLogic dBLogic = new DatabaseLogic();
+            Program program = new Program();
+
+
+            Console.WriteLine("Connecting to MySQL...");
+            // Validate the connection to the DB
+            if (dBLogic.ConnectToMySQL())
             {
-                string record = _serialPort.ReadExisting();
-                Console.WriteLine(record);
-                Thread.Sleep(200);
+                Console.WriteLine("Connection with DB SUCCESFUL");
+                Console.WriteLine(" ");
             }
+            else
+            {
+                program.DisplayError("Connection with DB NOT succesful.Please check the connection to the MySQL database you are using.");
+                program.EscapeProgram();
+            }
+
+            // Validate the connection with the Arduino
+            Console.WriteLine("Connecting to MySQL...");
+            if (arduino.ValidateConnection())
+            {
+                Console.WriteLine("Connection with Arduino SUCCESFUL");
+                Console.WriteLine(" ");
+                arduino.ActivateMeasurment();
+            }
+            else
+            {
+                program.DisplayError("Connection with Arduino NOT succesful. Please check the serial connection and port you are using.");
+                program.EscapeProgram();
+            }
+        }
+
+
+        private void DisplayError(string error)
+        {
+            Console.WriteLine("--- WARNING WARNING WARNING ---");
+            Console.WriteLine("--- " + error + " ---");
+        }
+
+
+        private void EscapeProgram()
+        {
+            Console.WriteLine("Press any key to stop...");
+            Console.ReadKey();
         }
     }
 }
+
