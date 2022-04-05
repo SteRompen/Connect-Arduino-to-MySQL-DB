@@ -11,7 +11,7 @@ Installing MySQL is pretty simple, but if you need any help to get started, plea
 - id (PK, autoincrement and not null)
 - record (this is the reading from the Arduino)
 - timestamp (this is the moment when the reading entered the DB)
-- Maybe you need additional data, you can enter this here. Please note that you also need to change the INSERT statement in the C# code if you want to do this! 
+- Maybe you need additional data, you can enter this here. Please note that you also need to change the INSERT statement in the C# code if you want to do this! Some IMPORTANT inforamtion: in the guide above, they tell you to use `root` as user and your DB password as password. This is not very secure. My advice is to create an user with acces and adminrights (you need these to make changes to the DB) to execute this code. Now you can share this code with other is a save way, without sharing your strong password for entering your MySQL. 
 
 ### Arduino
 The only thing you need to add to your existing Arduino code is a print statement. For example, if you have the variable `_distance-to-surface` when using an ultrasonic sensor, you write the following statement in your void: `Serial.println(_distance-to-surface)`. IT IS VERY IMPORTANT, ALSO WHEN YOU DON'T USE THE ULTRASONIC SENSOR, TO PUT A DELAY OF 5000 ms BEFORE THE PRINT STATEMENT!!! The print statement will be captured in the `record` in your MySQL DB (see above). In some cases, you need to change the `BaudRate`. This depends on your Arduino code, so make sure the `BaudRate` in the Arduino code and the C# match. If they don't, there is a big chance of getting an error or invalid measurements/readings.
