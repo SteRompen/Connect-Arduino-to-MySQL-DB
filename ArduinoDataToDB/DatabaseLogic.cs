@@ -31,13 +31,11 @@ namespace ArduinoDataToDB
             }
         }
 
+
         public void SaveData(string data)
         {
-            Console.WriteLine("Deze data is verkregen: " + data);
+            Console.WriteLine("Data from Arduino: " + data);
 
-            //string sql = "INSERT INTO dbcasus.measuring VALUES 'test'";
-            //MySqlCommand cmd = new MySqlCommand(sql, _connStr);
-            //cmd.ExecuteNonQuery();
         }
     }
 }
