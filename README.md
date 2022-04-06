@@ -88,11 +88,6 @@ If you prefer using MS SQL Server, you can use the code below. Remove all of the
             conn.Close();
         }
 
-        /* If you prefer using MS SQL Server, you can use the code in the README of this project on GitHub.
-         * In case you want to switch to MS SQL, remove all code lines above and replace them with the code in 
-         * the README file (chapter MS SQL Server).
-         */
-
   
 # Contact
 If you have any questions or problems, please reach out to me by sending an email to 1915525rompen@zuyd.nl or info@stefanrompen.nl
