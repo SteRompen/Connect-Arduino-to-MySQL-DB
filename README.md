@@ -30,5 +30,62 @@ The only thing you need to add to your existing Arduino code is a print statemen
 ### Setup & link
 Before you can use this program, you need to define the MySQL connection string in the code. This can be done very easily. Also, you need to make sure (see class "Arduino"), that you chose the right COM port. This will be different on every device you use, so make sure the right COM port is written in the code. If you don't know what serial port you are using right now, you can learn how do to do this here: https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE . To get the data into the right database and table, you need to change a small part of the `INSERT` statement. This is the part after `INSERT INTO`. You need to type `yourDatabaseName.TableName`. It is important to change this, otherwise the code won't work!
 
+## MS SQL Server
+If you prefer using MS SQL Server, you can use the code below. Remove all of the MySQL code in `DatabaseLogic`, then paste this code. Please make sure changing the connection string, this will not be the same as in the example below. 
+
+        * This bool validates the connection between this program and the datbase. If there is 
+        * no valid connection, the user gets an error about this. 
+        */
+        public bool ConnectionToDBSuccessful()
+        {
+            //This is your personal MySQL connection string, you need to change this. 
+            string _connStr = "Server = myServerAddress; Database = myDataBase; Trusted_Connection = True;";
+            SqlConnection conn = new SqlConnection(_connStr);
+
+            // Try to make a connection with the DB from the string above
+            try
+            {
+                conn.Open();
+                conn.Close();
+                return true;
+            }
+            // Error catch when connection is unvalid
+            catch (Exception err)
+            {
+                // Show the error that occured 
+                Console.WriteLine(err.ToString());
+                conn.Close();
+                return false;
+            }
+        }
+
+
+        /* After each succesful reading done by the Arduino, the data gets saved in the database. 
+         * This function saves the reading and attaches a timestamp to You can add more properties to it
+         * if you want to, but make sure to add them also to the table in the DB. Otherwise, the program 
+         * will crash because of a non existing part in the table. 
+         */
+        public void SaveData(float data)
+        {
+            Console.WriteLine("Data from Arduino: " + data);
+
+            string _connStr = "Server = myServerAddress; Database = myDataBase; Trusted_Connection = True;";
+            SqlConnection conn = new SqlConnection(_connStr);
+            DateTime getDateTime = DateTime.Now;
+            // You also need to change the INSERT statement. After 'INSERT INTO', you need to write yourDatabase.yourTable.
+            string sqlInsert = "INSERT INTO testdb.test(measurement, timestamp) VALUES (@currentMeasurement, @currentDateTime)";
+
+            
+            conn.Open();
+            // Parameterized query used to prevent SQL injection attacks 
+            using (SqlCommand cmd = new SqlCommand(sqlInsert, conn))
+            {
+                _ = cmd.Parameters.AddWithValue("@currentMeasurement", data);
+                _ = cmd.Parameters.AddWithValue("@currentDateTime", getDateTime);
+                _ = cmd.ExecuteNonQuery();
+            }
+            conn.Close();
+        }
+  
 # Contact
 If you have any questions or problems, please reach out to me by sending an email to 1915525rompen@zuyd.nl or info@stefanrompen.nl
