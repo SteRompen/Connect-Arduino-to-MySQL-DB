@@ -31,7 +31,7 @@ The only thing you need to add to your existing Arduino code is a print statemen
 Before you can use this program, you need to define the MySQL connection string in the code. This can be done very easily. Also, you need to make sure (see class "Arduino"), that you chose the right COM port. This will be different on every device you use, so make sure the right COM port is written in the code. If you don't know what serial port you are using right now, you can learn how do to do this here: https://support.arduino.cc/hc/en-us/articles/4406856349970-Select-board-and-port-in-Arduino-IDE. To get the data into the right database and table, you need to change a small part of the `INSERT` statement. This is the part after `INSERT INTO`. You need to type `yourDatabaseName.TableName`. It is important to change this, otherwise the code won't work!
 
 ## MS SQL Server
-If you prefer using MS SQL Server, you can use the code below. Remove all of the MySQL code in `DatabaseLogic`, then paste this code. Please make sure changing the connection string, this will not be the same as in the example below. 
+If you prefer using MS SQL Server, you can use the code below. Remove all of the MySQL code in `DatabaseLogic`, then paste this code. Please make sure changing the connection string, this will not be the same as in the example below. When using MS SQL, make sure you add a table with the same content described in chapter MySQL.
 
 
         /*
