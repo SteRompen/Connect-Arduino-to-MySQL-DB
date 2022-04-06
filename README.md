@@ -33,8 +33,8 @@ Before you can use this program, you need to define the MySQL connection string 
 ## MS SQL Server
 If you prefer using MS SQL Server, you can use the code below. Remove all of the MySQL code in `DatabaseLogic`, then paste this code. Please make sure changing the connection string, this will not be the same as in the example below. 
 
-`
-/*
+
+        /*
         * This bool validates the connection between this program and the datbase. If there is 
         * no valid connection, the user gets an error about this. 
         */
@@ -92,7 +92,7 @@ If you prefer using MS SQL Server, you can use the code below. Remove all of the
          * In case you want to switch to MS SQL, remove all codelines above and replace them with the code in 
          * the README file (chapter MS SQL Server).
          */
-`
+
   
 # Contact
 If you have any questions or problems, please reach out to me by sending an email to 1915525rompen@zuyd.nl or info@stefanrompen.nl
