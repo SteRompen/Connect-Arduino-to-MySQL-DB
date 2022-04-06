@@ -32,15 +32,15 @@ Before you can use this program, you need to define the MySQL connection string 
 
 ## MS SQL Server
 If you prefer using MS SQL Server, you can use the code below. Remove all of the MySQL code in `DatabaseLogic`, then paste this code. Please make sure changing the connection string, this will not be the same as in the example below. 
-
-       /*
-       * This bool validates the connection between this program and the datbase. If there is 
+`
+/*
+        * This bool validates the connection between this program and the datbase. If there is 
         * no valid connection, the user gets an error about this. 
         */
         public bool ConnectionToDBSuccessful()
         {
             //This is your personal MySQL connection string, you need to change this. 
-            string _connStr = "Server = .; Database = myDataBase; Trusted_Connection = True;";
+            string _connStr = "Server = .; Database = myDatabase; Trusted_Connection = True;";
             SqlConnection conn = new SqlConnection(_connStr);
 
             // Try to make a connection with the DB from the string above
@@ -70,13 +70,12 @@ If you prefer using MS SQL Server, you can use the code below. Remove all of the
         {
             Console.WriteLine("Data from Arduino: " + data);
 
-            string _connStr = "Server = .; Database = myDataBase; Trusted_Connection = True;";
-            SqlConnection conn = new SqlConnection(_connStr);
+            string _connStr = "Server = .; Database = myDatabase; Trusted_Connection = True;"; SqlConnection conn = new SqlConnection(_connStr);
             DateTime getDateTime = DateTime.Now;
             // You also need to change the INSERT statement. After 'INSERT INTO', you need to write yourDatabase.yourTable.
-            string sqlInsert = "INSERT INTO myDatabase.test(measurement, timestamp) VALUES (@currentMeasurement, @currentDateTime)";
+            string sqlInsert = "INSERT INTO myDatabase.dbo.test(measurement, timestamp) VALUES (@currentMeasurement, @currentDateTime)";
 
-            
+
             conn.Open();
             // Parameterized query used to prevent SQL injection attacks 
             using (SqlCommand cmd = new SqlCommand(sqlInsert, conn))
@@ -87,6 +86,11 @@ If you prefer using MS SQL Server, you can use the code below. Remove all of the
             }
             conn.Close();
         }
-  
+
+        /* If you prefer using MS SQL Server, you can use the code in the README of this project on GitHub.
+         * In case you want to switch to MS SQL, remove all codelines above and replace them with the code in 
+         * the README file (chapter MS SQL Server).
+         */
+  `
 # Contact
 If you have any questions or problems, please reach out to me by sending an email to 1915525rompen@zuyd.nl or info@stefanrompen.nl
