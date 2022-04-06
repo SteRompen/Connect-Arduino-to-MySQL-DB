@@ -40,7 +40,7 @@ If you prefer using MS SQL Server, you can use the code below. Remove all of the
         public bool ConnectionToDBSuccessful()
         {
             //This is your personal MySQL connection string, you need to change this. 
-            string _connStr = "Server = myServerAddress; Database = myDataBase; Trusted_Connection = True;";
+            string _connStr = "Server = .; Database = myDataBase; Trusted_Connection = True;";
             SqlConnection conn = new SqlConnection(_connStr);
 
             // Try to make a connection with the DB from the string above
