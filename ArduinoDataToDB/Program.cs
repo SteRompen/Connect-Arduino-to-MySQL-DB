@@ -9,6 +9,7 @@ changed. A manual about connecting your own database can be found in the README 
 GitHub README link: https://github.com/SteRompen/Connect-Arduino-to-MySQL-DB#readme
 */
 
+
 using System;
 
 
@@ -23,14 +24,14 @@ namespace ArduinoDataToDB
          */
         public static void Main()
         {
-            Arduino arduino = new Arduino();
+            SensorReading sensorReading = new SensorReading();
             DatabaseLogic dBLogic = new DatabaseLogic();
             Program program = new Program();
 
 
             // Validate the connection with the MySQL DB
             Console.WriteLine("Connecting to MySQL...");
-            if (dBLogic.ConnectionToDBSuccessful())
+            if (dBLogic.SuccessfulDBConnection())
             {
                 Console.WriteLine("Connection with DB SUCCESFUL");
                 Console.WriteLine(" ");
@@ -42,12 +43,12 @@ namespace ArduinoDataToDB
             }
 
             // Validate the connection with the Arduino
-            Console.WriteLine("Connecting to MySQL...");
-            if (arduino.ConnectionWithArduinoSuccessful())
+            Console.WriteLine("Connecting to Arduino...");
+            if (sensorReading.SuccessfulArduinoConnection())
             {
                 Console.WriteLine("Connection with Arduino SUCCESFUL");
                 Console.WriteLine(" ");
-                arduino.ActivateMeasurment();
+                sensorReading.ActivateMeasurment();
             }
             else
             {
