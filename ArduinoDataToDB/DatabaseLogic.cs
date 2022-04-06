@@ -9,28 +9,31 @@ changed. A manual about connecting your own database can be found in the README 
 GitHub README link: https://github.com/SteRompen/Connect-Arduino-to-MySQL-DB#readme
 */
 
+
 using MySql.Data.MySqlClient;
 using System;
+using System.Data.SqlClient;
 
 namespace ArduinoDataToDB
 {
     class DatabaseLogic
     {
+        //This is your personal MySQL connection string, you need to change this. 
+        private static readonly string _connStr = "server=localhost;user=testuser;database=testdb;port=3306;password=@Zuyd2022!";
+        private readonly MySqlConnection _conn = new MySqlConnection(_connStr);
+
+
         /* 
         * This bool validates the connection between this program and the datbase. If there is 
         * no valid connection, the user gets an error about this. 
         */
-        public bool ConnectionToDBSuccessful()
+        public bool SuccessfulDBConnection()
         {
-            //This is your personal MySQL connection string, you need to change this. 
-            string _connStr = "server=localhost;user=testuser;database=testdb;port=3306;password=@Zuyd2022!";
-            MySqlConnection conn = new MySqlConnection(_connStr);
-
             // Try to make a connection with the DB from the string above
             try
             {
-                conn.Open();
-                conn.Close();
+                _conn.Open();
+                _conn.Close();
                 return true;
             }
             // Error catch when connection is unvalid
@@ -38,7 +41,7 @@ namespace ArduinoDataToDB
             {
                 // Show the error that occured 
                 Console.WriteLine(err.ToString());
-                conn.Close();
+                _conn.Close();
                 return false;
             }
         }
@@ -53,20 +56,19 @@ namespace ArduinoDataToDB
         {
             Console.WriteLine("Data from Arduino: " + data);
 
-            string _connStr = "server=localhost;user=testuser;database=testdb;port=3306;password=@Zuyd2022!";
-            MySqlConnection conn = new MySqlConnection(_connStr);
             DateTime getDateTime = DateTime.Now;
             // You also need to change the INSERT statement. After 'INSERT INTO', you need to write yourDatabase.yourTable.
             string sqlInsert = "INSERT INTO testdb.test(measurement, timestamp) VALUES (@currentMeasurement, @currentDateTime)";
 
-            conn.Open();
-            using (MySqlCommand cmd = new MySqlCommand(sqlInsert, conn))
+            _conn.Open();
+            // Parameterized query used to prevent SQL injection attacks 
+            using (MySqlCommand cmd = new MySqlCommand(sqlInsert, _conn))
             {
                 _ = cmd.Parameters.AddWithValue("@currentMeasurement", data);
                 _ = cmd.Parameters.AddWithValue("@currentDateTime", getDateTime);
                 _ = cmd.ExecuteNonQuery();
             }
-            conn.Close();
+            _conn.Close();
         }
     }
 }

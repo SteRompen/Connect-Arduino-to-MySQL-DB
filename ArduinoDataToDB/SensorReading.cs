@@ -9,14 +9,16 @@ changed. A manual about connecting your own database can be found in the README 
 GitHub README link: https://github.com/SteRompen/Connect-Arduino-to-MySQL-DB#readme
 */
 
+
 using System;
 using System.Globalization;
 using System.IO.Ports;
 using System.Threading;
 
+
 namespace ArduinoDataToDB
 {
-    class Arduino
+    class SensorReading
     {
         readonly DatabaseLogic dBLogic = new DatabaseLogic();
         static SerialPort _serialPort;
@@ -26,7 +28,7 @@ namespace ArduinoDataToDB
          * This bool validates the connection between this program and the Arduino. If there is no valid connection,
          * the user gets an error about this. 
          */
-        public bool ConnectionWithArduinoSuccessful()
+        public bool SuccessfulArduinoConnection()
         {
             try
             {
@@ -56,15 +58,7 @@ namespace ArduinoDataToDB
          */
         public void ActivateMeasurment()
         {
-            _serialPort = new SerialPort
-            {
-                //Set your board COM
-                PortName = "COM7",
-                // Maybe you need to change this, check the BaudRate settings in your Arduino code
-                BaudRate = 9600
-            };
             _serialPort.Open();
-
             while (true)
             {
                 string record = _serialPort.ReadExisting();
