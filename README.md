@@ -33,7 +33,8 @@ Before you can use this program, you need to define the MySQL connection string 
 ## MS SQL Server
 If you prefer using MS SQL Server, you can use the code below. Remove all of the MySQL code in `DatabaseLogic`, then paste this code. Please make sure changing the connection string, this will not be the same as in the example below. 
 
-        * This bool validates the connection between this program and the datbase. If there is 
+       /*
+       * This bool validates the connection between this program and the datbase. If there is 
         * no valid connection, the user gets an error about this. 
         */
         public bool ConnectionToDBSuccessful()
@@ -69,11 +70,11 @@ If you prefer using MS SQL Server, you can use the code below. Remove all of the
         {
             Console.WriteLine("Data from Arduino: " + data);
 
-            string _connStr = "Server = myServerAddress; Database = myDataBase; Trusted_Connection = True;";
+            string _connStr = "Server = .; Database = myDataBase; Trusted_Connection = True;";
             SqlConnection conn = new SqlConnection(_connStr);
             DateTime getDateTime = DateTime.Now;
             // You also need to change the INSERT statement. After 'INSERT INTO', you need to write yourDatabase.yourTable.
-            string sqlInsert = "INSERT INTO testdb.test(measurement, timestamp) VALUES (@currentMeasurement, @currentDateTime)";
+            string sqlInsert = "INSERT INTO myDatabase.test(measurement, timestamp) VALUES (@currentMeasurement, @currentDateTime)";
 
             
             conn.Open();
